@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<title>Adviser Tools</title>
+<style>
+:root{--ink:#14181D;--ink-2:#1C222A;--ink-3:#252C36;--gold:#A6813E;--gold-l:#C9A968;--paper:#E9E7E2;--dim:#9FA6AF;--line:rgba(233,231,226,.14);--line-2:rgba(233,231,226,.32);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(1000px 500px at 85% -10%,rgba(123,159,199,.08),transparent 60%),radial-gradient(800px 450px at -10% 20%,rgba(166,129,62,.08),transparent 60%),var(--ink);color:var(--paper);font:15px/1.5 'Segoe UI',system-ui,-apple-system,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding-block:56px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line-2);padding-bottom:20px;margin-bottom:32px}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);margin:0 0 8px}
+h1{font-size:clamp(26px,5vw,36px);margin:0;font-weight:700;letter-spacing:-.02em}
+.out{background:none;border:1px solid var(--line-2);color:var(--dim);border-radius:8px;padding:8px 12px;font:600 13px inherit;cursor:pointer}
+.out:hover{color:var(--paper);border-color:var(--gold)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,0) 55%),var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:26px 24px;transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover,.card:focus-visible{transform:translateY(-3px);border-color:rgba(201,169,104,.6);box-shadow:0 18px 36px -22px rgba(0,0,0,.9);outline:none}
+.icon{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(201,169,104,.14);color:var(--gold-l)}
+.card h2{margin:4px 0 0;font-size:21px;font-weight:700}
+.card p{margin:0;color:var(--dim);font-size:14px}
+.go{margin-top:auto;padding-top:8px;color:var(--gold-l);font-weight:700;font-size:14px}
+.fine{margin-top:36px;color:var(--dim);font-size:12px}
+</style></head><body>
+<div class="wrap">
+  <div class="top">
+    <div><p class="eyebrow">Advisers only</p><h1>Adviser Tools</h1></div>
+    <button class="out" type="button" id="signOut">Sign out on this device</button>
+  </div>
+  <div class="cards">
+    <a class="card" href="retirement/">
+      <span class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+      <h2>Retirement Calculator</h2>
+      <p>CPF projection, CPF LIFE payouts, income needs and shortfall, with a one-page CPF summary and client snapshot.</p>
+      <span class="go">Open calculator →</span>
+    </a>
+    <a class="card" href="vantage/">
+      <span class="icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></span>
+      <h2>PRUVantage Plan Simulator</h2>
+      <p>Wealth III, Assure II and Prosper: account value, death benefit, charges and a client summary PDF.</p>
+      <span class="go">Open simulator →</span>
+    </a>
+  </div>
+  <p class="fine">Internal use only. Figures are illustrations, not guarantees. Client-facing material should be approved by compliance before use.</p>
+</div>
+<script>
+document.getElementById('signOut').addEventListener('click', function(){
+  try { localStorage.removeItem('pvw3_key'); sessionStorage.removeItem('pvw3_key'); } catch(e){}
+  location.reload();
+});
+</script>
+</body></html>
