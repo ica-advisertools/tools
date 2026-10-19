@@ -65,7 +65,7 @@ const PAYLOAD = "__PAYLOAD__";
       if (salt !== P.salt || (exp && Date.now() > +exp)) { localStorage.removeItem('pvw3_key'); sessionStorage.removeItem('pvw3_key'); return; }
       const key = await crypto.subtle.importKey('raw', b64(k), {name:'AES-GCM'}, false, ['decrypt']);
       show(await decrypt(key));
-    } catch(e) { try { localStorage.removeItem('pvw3_key'); sessionStorage.removeItem('pvw3_key'); } catch(_){} }
+    } catch(e) { /* keep the saved login: an out-of-date copy of a page must not log the person out of the others */ }
   })();
 })();
 </script>
