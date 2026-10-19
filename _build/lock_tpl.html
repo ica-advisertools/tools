@@ -10,12 +10,13 @@ body{margin:0;background:var(--ink);color:var(--paper);font:15px/1.5 'Segoe UI',
 .lockbox h1{font-size:24px;margin:0 0 6px;font-weight:700}
 .lockbox p{color:var(--dim);font-size:13.5px;margin:0 0 18px}
 .lockbox label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
-.lockbox input[type=password]{width:100%;background:var(--ink-3);border:1px solid var(--line-2);color:var(--paper);font:500 15px inherit;padding:10px 12px;border-radius:8px}
+.lockbox #pw{width:100%;background:var(--ink-3);border:1px solid var(--line-2);color:var(--paper);font:500 15px inherit;padding:10px 12px;border-radius:8px}
 .lockbox .rem{display:flex;gap:8px;align-items:center;margin:12px 0 16px;color:var(--paper);font-size:13.5px}
 .lockbox .rem input{accent-color:var(--gold);width:16px;height:16px}
 .lockbox button{width:100%;background:linear-gradient(180deg,var(--gold-l),var(--gold));color:var(--ink);border:0;border-radius:8px;padding:11px;font-weight:700;font-size:14px;cursor:pointer}
 .lockbox .msg{color:#F0A27F;font-size:13px;min-height:18px;margin:10px 0 0}
 .lockbox .fine{font-size:12px;margin:16px 0 0}
+.pwwrap{position:relative}.pwwrap input[type=password],.pwwrap input[type=text]{width:100%;padding-right:44px!important}.pwwrap .eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:34px;height:34px;display:grid;place-items:center;background:none!important;border:0;border-radius:6px;color:var(--dim);cursor:pointer;padding:0!important}.pwwrap .eye:hover{color:var(--paper)}.eye svg{width:20px;height:20px}
 </style></head><body>
 <div class="lock" id="lock">
   <form class="lockbox" id="lockForm" autocomplete="off">
@@ -23,13 +24,15 @@ body{margin:0;background:var(--ink);color:var(--paper);font:15px/1.5 'Segoe UI',
     <h1>__TITLE__</h1>
     <p>__DESC__</p>
     <label for="pw">Password</label>
-    <input id="pw" type="password" autocomplete="current-password" required>
+    <div class="pwwrap"><input id="pw" type="password" autocomplete="current-password" required><button type="button" class="eye" id="eyeBtn" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><line id="eyeSlash" x1="3" y1="3" x2="21" y2="21" hidden/></svg></button></div>
     <label class="rem" for="remember"><input id="remember" type="checkbox"> Remember on this device</label>
     <button type="submit" id="unlockBtn">Unlock</button>
     <p class="msg" id="lockMsg" aria-live="polite"></p>
-    <p class="fine">Internal use only.</p>
+    <p class="fine">Internal use only. Site version: __STAMP__</p>
   </form>
 </div>
+<script>(function(){var b=document.getElementById('eyeBtn'),i=document.getElementById('pw'),s=document.getElementById('eyeSlash');b.addEventListener('click',function(){var show=i.type==='password';i.type=show?'text':'password';b.setAttribute('aria-pressed',String(show));b.setAttribute('aria-label',show?'Hide password':'Show password');if(show)s.removeAttribute('hidden');else s.setAttribute('hidden','');i.focus();});})();</script>
+
 <script>
 const PAYLOAD = "__PAYLOAD__";
 (function(){
@@ -51,15 +54,15 @@ const PAYLOAD = "__PAYLOAD__";
     let key, html;
     try { key = await keyFromPw(document.getElementById('pw').value); html = await decrypt(key); }
     catch(err) { msg.textContent = 'That password is not right. Please check with Laura.'; return; }
-    try { const kv = toB64(await crypto.subtle.exportKey('raw', key)) + '.' + P.salt; sessionStorage.setItem('pvw3_key', kv); if (document.getElementById('remember').checked) localStorage.setItem('pvw3_key', kv); } catch(e){}
+    try { const kv = toB64(await crypto.subtle.exportKey('raw', key)) + '.' + P.salt; sessionStorage.setItem('pvw3_key', kv); localStorage.setItem('pvw3_key', document.getElementById('remember').checked ? kv : kv + '.' + (Date.now() + 12*3600*1000)); } catch(e){}
     show(html);
   });
   (async () => {
     try {
       const saved = localStorage.getItem('pvw3_key') || sessionStorage.getItem('pvw3_key');
       if (!saved) return;
-      const [k, salt] = saved.split('.');
-      if (salt !== P.salt) { localStorage.removeItem('pvw3_key'); sessionStorage.removeItem('pvw3_key'); return; }
+      const [k, salt, exp] = saved.split('.');
+      if (salt !== P.salt || (exp && Date.now() > +exp)) { localStorage.removeItem('pvw3_key'); sessionStorage.removeItem('pvw3_key'); return; }
       const key = await crypto.subtle.importKey('raw', b64(k), {name:'AES-GCM'}, false, ['decrypt']);
       show(await decrypt(key));
     } catch(e) { try { localStorage.removeItem('pvw3_key'); sessionStorage.removeItem('pvw3_key'); } catch(_){} }
