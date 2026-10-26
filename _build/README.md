@@ -15,7 +15,7 @@ Each page is `_build/lock_tpl.html` with its content encrypted inside (AES-GCM-2
 1. Read the latest artifact HTML; drop the artifact viewer's outer wrapper (first and last lines) so you have the calculator's own `<!DOCTYPE html> ... </html>`.
 2. For the team version, remove "Isaac Chong & Associates" everywhere (page heading, footer, "Prepared by" default value — leave it blank with placeholder "Adviser name" — snapshot header, and the CPF summary's `firm` constant and the places it is printed).
 3. In `<head>`: add `<meta name="robots" content="noindex,nofollow">`, the style `[hidden]:not([hidden=until-found i]){display:none!important}body{padding-top:22px}`, and `_build/shim.js` (makes the save buttons download files outside Claude).
-4. After `<body>`: add the "← All tools" link (href `../`), same as the current pages.
+4. After `<body>`: add the "← All tools" link (href `../`), same as the current pages. Add the same link right after `<body>` in the lock page too, so it shows on the password screen as it does on the PRUVantage page.
 5. Encrypt into `lock_tpl.html` with title "Retirement Calculator" and write to `retirement/index.html`. Reuse the existing salt (run `_build/recover.js` to get it) so one login keeps working across all three pages.
 6. Test that the right password opens it and a wrong one is refused, then commit and push to `main`. GitHub Pages republishes in about a minute.
 
