@@ -25,5 +25,8 @@ const src=fs.readFileSync('_work/legacy_src.html','utf8');
 const head='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>[hidden]:not([hidden=until-found i]){display:none!important}body{padding-top:22px}.alltools{position:absolute;top:8px;left:max(16px,env(safe-area-inset-left,0px));font:600 13px system-ui,sans-serif;color:#C9A968;text-decoration:none}.alltools:hover{text-decoration:underline}</style></head><body><a class="alltools" href="../">← All tools</a>';
 const page=head+src+'</body></html>';
 fs.mkdirSync('legacy',{recursive:true});
-fs.writeFileSync('legacy/index.html', lock(page,'PRUApex Legacy Index II Simulator','Enter the team password to open the simulator.'));
+// Same "All tools" link as the PRUVantage page, shown on the password screen too
+const BACK=fs.readFileSync('vantage/index.html','utf8').match(/<a href="\.\.\/"[^>]*>← All tools<\/a>/)[0];
+fs.writeFileSync('legacy/index.html', lock(page,'PRUApex Legacy Index II Simulator','Enter the team password to open the simulator.')
+  .replace('</style></head><body>\n<div class="lock"','</style></head><body>\n'+BACK+'\n<div class="lock"'));
 check('legacy/index.html');

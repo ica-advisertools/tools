@@ -24,6 +24,6 @@ Run `PVW_PW=... node _build/recover.js` to get the simulator's markup, script bu
 
 ## Updating the PRUApex Legacy Index II Simulator
 Save the artifact's page source to `_work/legacy_src.html` (the file Claude publishes, without the viewer's wrapper), then run
-`PVW_PW=... node _build/build_legacy.js`. It adds the head additions and "← All tools" link, encrypts with the shared salt,
+`PVW_PW=... node _build/build_legacy.js`. It adds the head additions and "← All tools" link (inside the page and on the password screen), encrypts with the shared salt,
 writes `legacy/index.html` and checks that the password opens it and a wrong one is refused. Also rebuild the landing page
 (`PVW_PW=... node _build/build_legacy.js --landing`) if the card text changed.
