@@ -38,7 +38,9 @@ const PAYLOAD = "__PAYLOAD__";
 (function(){
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
   const toB64 = u => btoa(String.fromCharCode(...new Uint8Array(u)));
-  const P = JSON.parse(atob(PAYLOAD));
+  let P = JSON.parse(atob(PAYLOAD));
+  // Always open the newest published copy, even if this browser saved an older one.
+  const fresh = (async () => { try { const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 4000); const r = await fetch(location.pathname + '?fresh=' + Date.now(), {cache:'no-store', signal: ctl.signal}); clearTimeout(tm); const m = (await r.text()).match(/const PAYLOAD = "([A-Za-z0-9+\/=]{100,})"/); if (m && m[1] !== PAYLOAD) P = JSON.parse(atob(m[1])); } catch(e) {} })();
   const msg = document.getElementById('lockMsg');
   async function keyFromPw(pw){
     const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(String(pw).trim().toLowerCase()), 'PBKDF2', false, ['deriveKey']);
@@ -50,7 +52,7 @@ const PAYLOAD = "__PAYLOAD__";
   }
   function show(html){ const go = () => { document.open(); document.write(html); document.close(); }; if (document.readyState === 'complete') go(); else window.addEventListener('load', go, {once:true}); }
   document.getElementById('lockForm').addEventListener('submit', async e => {
-    e.preventDefault(); msg.textContent = 'Checking…';
+    e.preventDefault(); msg.textContent = 'Checking…'; await fresh;
     let key, html;
     try { key = await keyFromPw(document.getElementById('pw').value); html = await decrypt(key); }
     catch(err) { msg.textContent = 'That password is not right. Please check with Laura.'; return; }
@@ -58,7 +60,7 @@ const PAYLOAD = "__PAYLOAD__";
     show(html);
   });
   (async () => {
-    try {
+    try { await fresh;
       const saved = localStorage.getItem('pvw3_key') || sessionStorage.getItem('pvw3_key');
       if (!saved) return;
       const [k, salt, exp] = saved.split('.');
