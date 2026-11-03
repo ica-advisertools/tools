@@ -13,12 +13,12 @@ The site is four password-locked pages that share one password and one salt:
 Each page is `_build/lock_tpl.html` with its content encrypted inside (AES-GCM-256, key from PBKDF2-SHA256, 250,000 iterations, using the salt stored in each page's payload). The password is entered in lower case with spaces trimmed. **The password is never stored in this repo; ask Laura for it.** Never commit unencrypted tool content: this repo is public.
 
 ## Updating the Retirement Calculator after Laura changes her artifact
-1. Read the latest artifact HTML; drop the artifact viewer's outer wrapper (first and last lines) so you have the calculator's own `<!DOCTYPE html> ... </html>`.
-2. For the team version, remove "Isaac Chong & Associates" everywhere (page heading, footer, "Prepared by" default value — leave it blank with placeholder "Adviser name" — snapshot header, and the CPF summary's `firm` constant and the places it is printed).
-3. In `<head>`: add `<meta name="robots" content="noindex,nofollow">`, the style `[hidden]:not([hidden=until-found i]){display:none!important}body{padding-top:22px}`, and `_build/shim.js` (makes the save buttons download files outside Claude).
-4. After `<body>`: add the "← All tools" link (href `../`), same as the current pages. Add the same link right after `<body>` in the lock page too, so it shows on the password screen as it does on the PRUVantage page.
-5. Encrypt into `lock_tpl.html` with title "Retirement Calculator" and write to `retirement/index.html`. Reuse the existing salt (run `_build/recover.js` to get it) so one login keeps working across all three pages.
-6. Test that the right password opens it and a wrong one is refused, then commit and push to `main`. GitHub Pages republishes in about a minute.
+Save the artifact's page source to `_work/retirement_src.html` (the calculator's own `<!DOCTYPE html> ... </html>`, without the viewer's wrapper), then run
+`PVW_PW=... node _build/build_retirement.js`. It makes the team version (removes "Isaac Chong & Associates" and Laura's adviser details; "Prepared by" is left blank
+with placeholder "Adviser name"), adds the head additions, `_build/shim.js` and the "← All tools" link (inside the page and on the password screen), encrypts with the
+shared salt, writes `retirement/index.html` and checks that the password opens it and a wrong one is refused. It stops if any firm or personal detail is left in.
+The CPF summary and client snapshot are built as PDFs in the page (html2canvas and jsPDF from cdnjs); the shim hands the PDF to a normal browser download.
+Then commit and push to `main`. GitHub Pages republishes in about a minute.
 
 ## Updating the simulator or landing page
 Run `PVW_PW=... node _build/recover.js` to get the simulator's markup, script bundle and salt, make the change, re-encrypt the same way (payload is JSON `{html, js}` for the simulator), and push. Also republish Laura's simulator artifacts in Claude so both copies match.

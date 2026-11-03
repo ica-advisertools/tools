@@ -3,7 +3,7 @@
 (function(){
   if (window.claude && window.claude.use) return;
   var dl = { save: function(o){
-    var blob = new Blob([o.data], {type: 'text/html;charset=utf-8'});
+    var blob = o.data instanceof Blob ? o.data : new Blob([o.data], {type: 'text/html;charset=utf-8'});
     var url = URL.createObjectURL(blob), a = document.createElement('a');
     a.href = url; a.download = o.filename || 'download.html'; a.rel = 'noopener';
     document.body.appendChild(a); a.click();
