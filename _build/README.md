@@ -17,7 +17,7 @@ Save the artifact's page source to `_work/retirement_src.html` (the calculator's
 `PVW_PW=... node _build/build_retirement.js`. It makes the team version (removes "Isaac Chong & Associates" and Laura's adviser details; "Prepared by" is left blank
 with placeholder "Adviser name"), adds the head additions, `_build/shim.js` and the "← All tools" link (inside the page and on the password screen), encrypts with the
 shared salt, writes `retirement/index.html` and checks that the password opens it and a wrong one is refused. It stops if any firm or personal detail is left in.
-The CPF summary and client snapshot are built as PDFs in the page (html2canvas and jsPDF from cdnjs); the shim hands the PDF to a normal browser download.
+The CPF summary and client snapshot have a Print button only (no PDF download): it opens the report in a new tab with a "press Ctrl+P / Cmd+P" bar; on this site the print window also opens by itself.
 Then commit and push to `main`. GitHub Pages republishes in about a minute.
 
 ## Updating the simulator or landing page
