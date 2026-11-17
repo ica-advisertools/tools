@@ -4,7 +4,8 @@ The site is four password-locked pages that share one password and one salt:
 
 | Path | What it is | Source of truth |
 |---|---|---|
-| `/` | Landing page with links to both tools | `_build/landing.html` |
+| `/` | Landing page with links to all tools | `_build/landing.html` |
+| `/growth/` | Compound Growth Calculator (`PVW_PW=... node _build/build_growth.js --landing`, source `_work/growth_src.html`) | artifact page content |
 | `/vantage/` | PRUVantage Plan Simulator | Laura's Claude artifact "PRUVantage Plan Simulator" |
 | `/legacy/` | PRUApex Legacy Index II Simulator | Laura's Claude artifact "PRUApex Legacy Index II Simulator" (https://claude.ai/artifact/Lx1KphCK6A9H1bqpZ2L6bm) |
 | `/prushield/` | PRUShield Premium & Claims Calculator | Laura's Claude artifact "PRUShield Premium & Claims Calculator" (https://claude.ai/artifact/AmciUL8CsuqEzFm3nufaEa) |
