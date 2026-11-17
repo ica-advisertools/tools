@@ -23,7 +23,7 @@ rep('<body>\n', '<body>\n'+BACK+'\n');
 rep('href="https://claude.ai/artifact/AMCGRP3Jzfo59EDxMTmaBj" target="_blank"', 'href="../growth/" target="_blank"');
 rep('<p class="eyebrow">Isaac Chong &amp; Associates · Wealth Projection Statement</p>', '<p class="eyebrow">Wealth Projection Statement</p>');
 rep('<input id="advisorName" type="text" value="Isaac Chong &amp; Associates" />', '<input id="advisorName" type="text" value="" placeholder="Adviser name" />');
-s=s.replace(/>Isaac Chong &amp; Associates · (Retirement Calculator v[\d.]+ · Updated [^<]+)</, '>$1<');
+s=s.replace(/>Isaac Chong &amp; Associates · (Retirement Calculator(?: v[\d.]+)? · Updated [^<]+)</, '>$1<');
 rep("esc(adviser||'Isaac Chong & Associates')+' · Retirement projection</p>", "(adviser ? esc(adviser)+' · ' : '')+'Retirement projection</p>");
 s=s.replace(/const CPF_ADV_DEFAULT = \{[^}]*\};/, "const CPF_ADV_DEFAULT = {name:'', cred:'', role:'', phone:'', email:''};");
 rep("const firm = 'Isaac Chong & Associates';", "const firm = '';");
