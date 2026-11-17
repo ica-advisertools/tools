@@ -23,6 +23,7 @@ if (process.argv.includes('--landing')) {
 let s=fs.readFileSync('_work/growth_src.html','utf8');
 function rep(a,b){ const n=s.split(a).length-1; if(n!==1) throw 'expected one match ('+n+'): '+a.slice(0,70); s=s.replace(a,b); }
 // Team version: no firm name
+rep('href="https://claude.ai/artifact/TbdWP73FnkbUKtMQhNJn5g" target="_blank"','href="../retirement/" target="_blank"');
 rep('<p class="eyebrow">Isaac Chong &amp; Associates · Wealth Projection Statement</p>','<p class="eyebrow">Wealth Projection Statement</p>');
 rep('<input id="advisorName" type="text" value="Isaac Chong &amp; Associates">','<input id="advisorName" type="text" value="" placeholder="Adviser name">');
 if(/Isaac Chong|Laura|laurahoi|9799/.test(s)) throw 'personal or firm details left in the team version';

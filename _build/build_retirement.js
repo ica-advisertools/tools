@@ -20,6 +20,7 @@ function rep(a,b){ const n=s.split(a).length-1; if(n!==1) throw 'expected one ma
 const BACK=fs.readFileSync('retirement/index.html','utf8').match(/<a href="\.\.\/"[^>]*>← All tools<\/a>/)[0];
 rep('<head>\n', '<head>\n<meta name="robots" content="noindex,nofollow">\n<style>[hidden]:not([hidden=until-found i]){display:none!important}body{padding-top:22px}</style>\n'+fs.readFileSync('_build/shim.js','utf8').trim()+'\n');
 rep('<body>\n', '<body>\n'+BACK+'\n');
+rep('href="https://claude.ai/artifact/AMCGRP3Jzfo59EDxMTmaBj" target="_blank"', 'href="../growth/" target="_blank"');
 rep('<p class="eyebrow">Isaac Chong &amp; Associates · Wealth Projection Statement</p>', '<p class="eyebrow">Wealth Projection Statement</p>');
 rep('<input id="advisorName" type="text" value="Isaac Chong &amp; Associates" />', '<input id="advisorName" type="text" value="" placeholder="Adviser name" />');
 s=s.replace(/>Isaac Chong &amp; Associates · (Retirement Calculator v[\d.]+ · Updated [^<]+)</, '>$1<');
