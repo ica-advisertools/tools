@@ -8,6 +8,7 @@ body{margin:0;min-height:100vh;background:radial-gradient(1000px 500px at 85% -1
 .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line-2);padding-bottom:20px;margin-bottom:32px}
 .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);margin:0 0 8px}
 h1{font-size:clamp(26px,5vw,36px);margin:0;font-weight:700;letter-spacing:-.02em}
+.firm{margin:8px 0 0;font-size:15px;font-weight:600;letter-spacing:.02em;color:var(--gold-l)}
 .out{background:none;border:1px solid var(--line-2);color:var(--dim);border-radius:8px;padding:8px 12px;font:600 13px inherit;cursor:pointer}
 .out:hover{color:var(--paper);border-color:var(--gold)}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
@@ -21,7 +22,7 @@ h1{font-size:clamp(26px,5vw,36px);margin:0;font-weight:700;letter-spacing:-.02em
 </style></head><body>
 <div class="wrap">
   <div class="top">
-    <div><p class="eyebrow">Advisers only</p><h1>Adviser Tools</h1></div>
+    <div><p class="eyebrow">Advisers only</p><h1>Adviser Tools</h1><p class="firm">Isaac Chong &amp; Associates</p></div>
     <button class="out" type="button" id="signOut">Sign out on this device</button>
   </div>
   <div class="cards">
@@ -56,7 +57,7 @@ h1{font-size:clamp(26px,5vw,36px);margin:0;font-weight:700;letter-spacing:-.02em
       <span class="go">Open calculator →</span>
     </a>
   </div>
-  <p class="fine">Internal use only. Figures are illustrations, not guarantees. Client-facing material should be approved by compliance before use.</p>
+  <p class="fine">The Retirement Calculator, PRUVantage, PRUApex Legacy Index II and PRUShield tools can save a client file (.json) and open it again later. Internal use only. Figures are illustrations, not guarantees. Client-facing material should be approved by compliance before use.</p>
 </div>
 <script>
 document.getElementById('signOut').addEventListener('click', function(){

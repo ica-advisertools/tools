@@ -9,7 +9,7 @@ The site is four password-locked pages that share one password and one salt:
 | `/vantage/` | PRUVantage Plan Simulator | Laura's Claude artifact "PRUVantage Plan Simulator" |
 | `/legacy/` | PRUApex Legacy Index II Simulator | Laura's Claude artifact "PRUApex Legacy Index II Simulator" (https://claude.ai/artifact/Lx1KphCK6A9H1bqpZ2L6bm) |
 | `/prushield/` | PRUShield Premium & Claims Calculator | Laura's Claude artifact "PRUShield Premium & Claims Calculator" (https://claude.ai/artifact/AmciUL8CsuqEzFm3nufaEa) |
-| `/retirement/` | Retirement Calculator | Laura's Claude artifact "Retirement Calculator v1.3" (https://claude.ai/artifact/TbdWP73FnkbUKtMQhNJn5g) |
+| `/retirement/` | Retirement Calculator | Laura's Claude artifact "Retirement Calculator" (https://claude.ai/artifact/TbdWP73FnkbUKtMQhNJn5g) |
 
 Each page is `_build/lock_tpl.html` with its content encrypted inside (AES-GCM-256, key from PBKDF2-SHA256, 250,000 iterations, using the salt stored in each page's payload). The password is entered in lower case with spaces trimmed. **The password is never stored in this repo; ask Laura for it.** Never commit unencrypted tool content: this repo is public.
 
@@ -35,3 +35,7 @@ Save the artifact's page source to `_work/prushield_src.html` (the file Claude p
 `PVW_PW=... node _build/build_prushield.js` (add `--landing` if the landing page changed). It adds the head additions and "← All tools" link,
 encrypts with the shared salt, writes `prushield/index.html` and checks that the password opens it and a wrong one is refused.
 The page loads html2canvas and jsPDF from cdnjs for its PDF one-pager, and downloads the PDF directly outside Claude (no shim needed).
+
+## Client files and the firm name
+The Retirement Calculator, PRUVantage, PRUApex Legacy Index II and PRUShield pages each have "Save client file" / "Open client file" buttons (a .json file the adviser keeps).
+Laura asked for "Isaac Chong & Associates" under the title on the landing page (inside the encrypted page only). The tool pages themselves still carry no firm or personal details.
